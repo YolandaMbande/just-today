@@ -1,0 +1,107 @@
+const KEY = "justTodayDataV1";
+const blank = () => ({
+    version: 1,
+    days: {},
+    repeating: []
+});
+export function load() {
+    try {
+        return {
+            ...blank(),
+            ...JSON.parse(localStorage.getItem(KEY) || "{}")
+        }
+    } catch {
+        return blank()
+    }
+}
+export function save(s) {
+    localStorage.setItem(KEY, JSON.stringify(s))
+}
+export function key(d = new Date()) {
+    return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`
+}
+const uid = () => crypto.randomUUID ? crypto.randomUUID() : Date.now() + "-" + Math.random();
+export function ensure(s, k = key()) {
+    if (!s.days[k]) s.days[k] = {
+        items: []
+    };
+    for (const r of s.repeating.filter(x => x.active !== false))
+        if (!s.days[k].items.some(x => x.repeatId === r.id)) s.days[k].items.push({
+            id: uid(),
+            text: r.text,
+            completed: false,
+            repeating: true,
+            repeatId: r.id
+        });
+    save(s);
+    return s.days[k]
+}
+export function add(s, k, text, repeating) {
+    text = text.trim();
+    if (!text) return;
+    let rid = null;
+    if (repeating) {
+        rid = uid();
+        s.repeating.push({
+            id: rid,
+            text,
+            active: true
+        })
+    }
+    ensure(s, k).items.push({
+        id: uid(),
+        text,
+        completed: false,
+        repeating,
+        repeatId: rid
+    });
+    save(s)
+}
+export function toggle(s, k, id) {
+    const x = s.days[k]?.items.find(x => x.id === id);
+    if (x) {
+        x.completed = !x.completed;
+        save(s)
+    }
+}
+export function update(s, k, id, text, repeating) {
+    const x = s.days[k]?.items.find(x => x.id === id);
+    if (!x || !text.trim()) return;
+    text = text.trim();
+    x.text = text;
+    if (x.repeating && x.repeatId) {
+        const r = s.repeating.find(r => r.id === x.repeatId);
+        if (r) {
+            r.text = text;
+            if (!repeating) r.active = false
+        }
+    }
+    if (!x.repeating && repeating) {
+        const r = {
+            id: uid(),
+            text,
+            active: true
+        };
+        s.repeating.push(r);
+        x.repeatId = r.id
+    }
+    x.repeating = repeating;
+    if (!repeating) x.repeatId = null;
+    save(s)
+}
+export function remove(s, k, id) {
+    const d = s.days[k];
+    if (!d) return;
+    const x = d.items.find(x => x.id === id);
+    if (x?.repeating && x.repeatId) {
+        const r = s.repeating.find(r => r.id === x.repeatId);
+        if (r) r.active = false
+    }
+    d.items = d.items.filter(x => x.id !== id);
+    save(s)
+}
+export function status(d) {
+    if (!d?.items?.length) return null;
+    const n = d.items.filter(x => x.completed).length;
+    return n === d.items.length ? "done" : n ? "some" : "none"
+}

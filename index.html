@@ -1,0 +1,133 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Just Today
+    </title>
+    <link rel="icon" href="assets/icons/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gaegu&display=swap">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Serif+Display:ital@0;1&family=Patrick+Hand&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+  <body>
+    <main class="desk">
+      <span class="doodle d1">✿
+      </span>
+      <span class="doodle d2">✦
+      </span>
+      <section class="journal">
+        <i class="tape t1">
+        </i>
+        <i class="tape t2">
+        </i>
+        <header>
+          <a class="brand" href="index.html">JUST 
+            <b>today!
+            </b>
+          </a>
+          <a class="tab" href="history.html">past days ↗
+          </a>
+        </header>
+        <div class="content">
+          <aside>← don't overthink it ♡
+          </aside>
+          <div class="datebox">
+            <b>☀
+            </b>
+            <div>
+              <strong id="day">
+              </strong>
+              <span id="date">
+              </span>
+            </div>
+          </div>
+          <p class="hello" id="hello">
+          </p>
+          <h1>what matters
+            <br>
+            <em>today?
+            </em>
+          </h1>
+          <p class="sub">not your whole life. just today.
+          </p>
+          <section class="note">
+            <i class="pin">
+            </i>
+            <div id="empty" class="empty" hidden>
+              <b>↳ nothing yet.
+              </b>
+              <span>pick one tiny thing worth doing.
+              </span>
+            </div>
+            <ul id="list">
+            </ul>
+            <form id="addForm">
+              <button id="showAdd" class="add" type="button">＋ scribble something down
+              </button>
+              <div id="fields" hidden>
+                <input id="newThing" maxlength="80" placeholder="go outside for a bit..." required>
+                <div class="row">
+                  <label>
+                    <input id="repeat" type="checkbox"> bring this back tomorrow
+                  </label>
+                  <span>
+                    <button id="cancel" type="button">never mind
+                    </button>
+                    <button class="dark">add it
+                    </button>
+                  </span>
+                </div>
+              </div>
+            </form>
+          </section>
+          <footer>
+            <div>
+              <span id="count">0 of 0
+              </span>
+              <em id="whisper">no pressure.
+              </em>
+            </div>
+            <div class="track">
+              <i id="bar">
+              </i>
+            </div>
+            <small>done is lovely. half-done still counts.
+            </small>
+          </footer>
+        </div>
+        <div class="sticker">one
+          <br>day
+          <br>only
+        </div>
+      </section>
+    </main>
+    <dialog id="editDialog">
+      <form id="editForm">
+        <div class="dialoghead">
+          <b>change of plans?
+          </b>
+          <button id="close" type="button">×
+          </button>
+        </div>
+        <input id="editText" maxlength="80" required>
+        <label class="repeat">
+          <input id="editRepeat" type="checkbox"> bring this back tomorrow
+        </label>
+        <div class="actions">
+          <button id="remove" class="danger" type="button">delete
+          </button>
+          <button class="dark">save
+          </button>
+        </div>
+      </form>
+    </dialog>
+    <script type="module" src="js/app.js">
+    </script>
+  </body>
+   <footer class="site-footer">
+  <p>Made with love by Yolanda Mbande<span role="img" aria-label="paw print">🐾</span></p>
+</footer>
+</html>
